@@ -54,7 +54,6 @@ class Category extends Model
     }
     
     //scopes
-
     public function scopeParents($query) {
        return $query->whereNull('parent_id');
     }

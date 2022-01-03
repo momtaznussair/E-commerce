@@ -9,7 +9,7 @@ class CreateUsersTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return voidkkkkk
      */
     public function up()
     {
@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->boolean('active')->default(true);
-            $table->foreignId('country_id')->constrained()->onDelete('cascade');
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
             $table->string('avatar')->nullable();
             $table->date('dob');
             $table->string('phone');

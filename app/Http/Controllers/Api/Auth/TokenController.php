@@ -20,8 +20,7 @@ class TokenController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function login(LoginRequest $request)
-    {
+    public function login(LoginRequest $request) {
         $credintials = $request->only(['emailOrPhone', 'password']);
         if(! Auth::guard('web')->attempt($this->credentials($request))){
             return $this->apiResponse(null, 'Invalid Credentials', 401);
@@ -35,14 +34,13 @@ class TokenController extends Controller
 
 
 
-    public function register(UserRegisterRequest $request)
-    {
+    public function register(UserRegisterRequest $request) {
         $user = $this->userRepository->add($request->all());
-        return $this->apiResponse(['user' => $user, 'access-token' => $user->createToken('access-token')->plainTextToken], 'User Created Successfully', 201);
+        return $this->apiResponse(['user' => $user, 'access-token' => $user->createToken('access-token')->plainTextToken],
+         'User Created Successfully', 201);
     }
 
-    protected function credentials($request)
-    {
+    protected function credentials($request) {
         $credentials = ['password' => $request->password];
         if(is_numeric($request->emailOrPhone)){
             $credentials['phone'] = $request->emailOrPhone;
@@ -52,8 +50,7 @@ class TokenController extends Controller
         return $credentials;
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
         return $this->apiResponse(null,'User logged out successfully',200);
     }

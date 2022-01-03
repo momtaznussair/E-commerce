@@ -28,8 +28,8 @@
                             @can('Category_edit')
                             @empty($category->deleted_at)
                                  <a  
-                                    wire:click="selectCategory({{$category}})"
-                                    data-toggle="modal" href="#update" class="btn btn-sm btn-info"
+                                    wire:click="selectCategory({{$category}}, true)"
+                                    data-toggle="modal" href="#updateOrCreate" class="btn btn-sm btn-info"
                                     title="{{__('Edit')}}"><i class="las la-pen"></i></a> 
                             @endempty
                                
@@ -67,8 +67,7 @@
     </div>
     <div class="row mx-3">{{$categories->links()}} </div>
     {{-- modal --}}
-    <x-crud-by-name-modal mode="save" title="{{__('Add New')}}"/>
-    <x-crud-by-name-modal mode="delete" title="{{__('Delete')}}"/>
-    <x-crud-by-name-modal mode="update" title="{{__('Edit')}}"/>
+    @livewire('admin.categories.update-or-create-category')
     <x-crud-by-name-modal mode="forceDelete" title="{{__('Delete Permanently')}}"/>
+    <x-crud-by-name-modal mode="delete" title="{{__('Delete')}}"/>
 </div>

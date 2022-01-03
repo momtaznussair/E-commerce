@@ -14,37 +14,21 @@ class Categories extends Component
     public $name;
     public $trashed = false, $active = true, $search = '';
     public $category;
+
+    protected $listeners = ['categoriesUpdated' => '$refresh'];
     
-    public function render(CategoryRepositoryInterface $category)
-    {
+    public function render(CategoryRepositoryInterface $category) {
         $this->authorize('Category_access');
         return view('livewire.admin.categories.categories', [
             'categories' => $category->getAll($this->active, ['isTrashed' => $this->trashed,  'Search' => $this->search])
         ]);
     }
 
-    protected function rules() {
-        return [ 'name' => 'required|unique:categories,name'];
-    }
-
-    public function selectCategory($category) {
+    public function selectCategory($category, $toUpdate = false) {
+        //if it's the edit button that was pressed we just send the selected Category to the updateOrCreate Component
+        if($toUpdate){ return $this->emit('categorySelected', $category); }
         $this->category = $category['id'];
         $this->name = $category['name'];
-    }
-
-    public function save(CategoryRepositoryInterface $categoryRepository) {
-       $this->authorize('Category_create');
-       $categoryRepository->add($this->validate()) && 
-       $this->reset('name');
-       $this->emit('success', __('Created Successfully!'));
-    }
-
-    public function update(CategoryRepositoryInterface $categoryRepository)  {
-        $this->authorize('Category_edit');
-        $validName = $this->validate([ 'name' => 'required|unique:categories,name,' . $this->category]);
-        $categoryRepository->update($this->category, $validName) && 
-        $this->emit('success', __('Changes Saved!'));
-        $this->reset('name');
     }
 
     public function delete(CategoryRepositoryInterface $categoryRepository) {
@@ -62,7 +46,7 @@ class Categories extends Component
 
     public function restore($category, CategoryRepositoryInterface $categoryRepository) {
         $this->authorize('Category_delete');
-        $categoryRepository->restore($category) &&
+        $categoryRepository->restore($category['id']) &&
         $this->emit('success', __('Item restored!'));
     }
 

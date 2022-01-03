@@ -26,16 +26,16 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|digits:11|numeric|unique:users,phone',
             'city_id' => 'required|exists:cities,id',
             'country' => 'required|exists:countries,id',
             'avatar' =>  'nullable|image|max:1024', //1MB Max
             'password' => ['required', 'confirmed', Password::defaults()],
-            'age' => 'required|integer|min:13',
-            'gender' => ['required', Rule::in(['m', 'f']) ],
-            'type' => ['required', Rule::in(['Instructor', 'Student']) ],
+            'dob' => 'required|date_format:Y-m-d|before:today',
+            'gender' => 'required|boolean',
         ];
     }
 }

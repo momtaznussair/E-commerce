@@ -23,4 +23,11 @@ class CategoryRepository extends Repository implements CategoryRepositoryInterfa
       ->with('children')
       ->get();
    }
+
+   public function all() {
+      return $this->model
+      ->isActive()
+      ->pluck('name', 'id')
+      ->all();
+   }
 }

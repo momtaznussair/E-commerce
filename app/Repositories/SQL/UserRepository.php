@@ -14,7 +14,7 @@ class UserRepository extends Repository implements UserRepositoryInterface{
     }
 
     public function add($attributes){
-        $attributes['avatar'] &&  $attributes['avatar'] = $attributes['avatar']->store('users');
+        isset($attributes['avatar']) &&  $attributes['avatar'] = $attributes['avatar']->store('users');
         $attributes['password'] && $attributes['password'] = Hash::make($attributes['password']);
         return  Parent::add($attributes);
     }

@@ -44,7 +44,7 @@ class User extends Authenticatable implements CanResetPasswordContract
         'gender',
         'phone',
         'dob',
-        'country_id',
+        'city_id',
     ];
 
     /**
@@ -73,8 +73,8 @@ class User extends Authenticatable implements CanResetPasswordContract
      */
     protected $softCascade = [];
 
-    public function country() {
-       return $this->belongsTo(Country::class);
+    public function City() {
+       return $this->belongsTo(City::class);
     }
     
     protected $appends = ['name'];
