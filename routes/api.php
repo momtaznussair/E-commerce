@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GetCitiesController;
-use App\Http\Controllers\GetCountriesController;
 use App\Http\Controllers\Api\Auth\TokenController;
-use App\Http\Controllers\Api\Instructor\InstructorController;
 use App\Http\Controllers\Api\Profile\ProfileController;
+use App\Http\Controllers\Api\Cities\GetCitiesController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Categories\CategoryController;
+use App\Http\Controllers\Api\Countries\GetCountriesController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -23,8 +23,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('update-address-phone', [ProfileController::class, 'updateAddressAndPhone']);
     Route::post('update-password', [ProfileController::class, 'updatePassword']);
     Route::get('remove-image', [ProfileController::class, 'removeImage']);
-    //instructors
-    Route::get('instrcutors', [InstructorController::class, 'index']);
+   //categories
+   Route::apiResource('categories', CategoryController::class);
 });
 
 //get available counties and cities

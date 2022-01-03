@@ -2,12 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\City;
-use App\Models\Course;
-use App\Notifications\UserResetPassword;
+use Illuminate\Support\Str;
 use App\Traits\Scopes\IsTrashed;
-use App\Traits\Scopes\TypeScope;
-use App\Traits\Scopes\Searchable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\Scopes\ActiveScope;
 use App\Traits\Scopes\CountryScope;
@@ -21,30 +17,35 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Authenticatable implements CanResetPasswordContract
 {
-    use HasApiTokens, HasFactory, Notifiable, Searchable, IsTrashed, ActiveScope, 
-    SoftDeletes, CountryScope, SoftCascadeTrait, TypeScope, CanResetPassword;
+    use HasApiTokens, HasFactory, Notifiable, IsTrashed, ActiveScope, 
+    SoftDeletes, CountryScope, SoftCascadeTrait, CanResetPassword;
 
+    public static  function filters() {
+        return ['isActive', 'isTrashed', 'Search', 'country'];
+    }
+
+    /**
+   * Users' gender
+   * 
+   * @var array
+   */
+   public const Genders = [
+    0     => 'Male',
+    1    => 'Female'
+ ];
    
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'avatar',
         'password',
         'active',
         'gender',
         'phone',
-        'city_id',
-        'age',
-        'type'
+        'dob',
+        'country_id',
     ];
-
-     /**
-    * returns filters that can be applied to this model by getAll() method in Repository
-    * ckeck App\Repositories\SQL\Repository
-    */
-    public static  function filters() {
-        return ['isActive', 'isTrashed', 'Search', 'country', 'type'];
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -70,40 +71,23 @@ class User extends Authenticatable implements CanResetPasswordContract
      *
      * @var array
      */
-    protected $softCascade = ['courses'];
+    protected $softCascade = [];
 
-
-    protected $appends  = ['gen'];
-
-    public function getGenAttribute()
-    {
-        return $this->gender == 'm' ? 'Male' : 'Female';
+    public function country() {
+       return $this->belongsTo(Country::class);
     }
-
-    public function city()
-    {
-        return $this->belongsTo(City::class);
-    }
-
-    // courses of user of type instructor
-    public function courses()
-    {
-        return $this->hasMany(Course::class, 'instructor_id');
-    }
-
-    public function studentCourses()
-    {
-        return $this->belongsToMany(Course::class)->withTimestamps();
-    }
-
-    public function sendPasswordResetNotification($token)
-    {
-        $url = route('reset-password', $token);
-        $this->notify(new UserResetPassword($url));
-    }
-
+    
+    protected $appends = ['name'];
+    
     public function getAvatarPathAttribute() {
         return !is_null($this->avatar) ? asset('storage/' . $this->avatar) : asset('storage/users/default.jpg');
     }
 
+    public function getGenderTypeAttribute() {
+        return Self::Genders[$this->gender];
+    }
+
+    public function getNameAttribute() {
+        return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
+    }
 }

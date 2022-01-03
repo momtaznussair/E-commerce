@@ -12,9 +12,15 @@ class CategoryRepository extends Repository implements CategoryRepositoryInterfa
        Parent::__construct($category);
     }
 
-    public function getCourses($category)
-    {
-        return $this->getById($category)
-        ->courses()->pluck('name', 'id');
-    }
+    /**
+     * Display a listing of parent categories.
+     *
+     * @return 
+     */
+   public function getParents() {
+      return $this->model->parents()
+      ->isActive()
+      ->with('children')
+      ->get();
+   }
 }

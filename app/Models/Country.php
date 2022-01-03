@@ -36,12 +36,11 @@ class Country extends Model
     protected $softCascade = ['cities'];
     
     
-    public function cities(){
+    public function cities() {
         return $this->hasMany(City::class);
     }
     
-    public function users($type = null){
-        return $this->hasManyThrough(User::class, City::class)
-            ->type($type);
+    public function users() {
+        return $this->hasManyThrough(User::class, City::class);
     }
 }
