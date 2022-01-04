@@ -8,21 +8,28 @@
             {!! Form::open(['wire:submit.prevent' => $mode]) !!}
 
             <div class="modal-body">
+                {{-- name --}}
                 <div class="row form-group">
                     <div class="col">
-                       <div wire:ignore>
-                        {!! Form::label('parent_id', __('Category'), []) !!}
-                        {!! Form::select('parent_id', $categories, null, ['wire:model' => 'parent_id', 'id' => 'parent_id', 'class' => ['form-control', 'select2'], 'placeholder' => '', 'style' => 'width:100%']) !!}
-                       </div>
-                        @error('parent_id') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
+                        {!! Form::label('product_name', __('Product'), ['class' => 'label-required']) !!}
+                        {!! Form::text('name', null, ['wire:model' => 'name','id' => 'product_name', 'class' => ['form-control']]) !!}
+                        @error('name') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
                     </div>
                 </div>
-
+                {{-- price --}}
                 <div class="row form-group">
                     <div class="col">
-                        {!! Form::label('CategoryName', __('Category'), ['class' => 'label-required']) !!}
-                        {!! Form::text('name', null, ['wire:model' => 'name','id' => 'Categoryname', 'class' => ['form-control']]) !!}
-                        @error('name') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
+                        {!! Form::label('price', __('Price'), ['class' => 'label-required']) !!}
+                        {!! Form::number('name', null, ['wire:model' => 'price','id' => 'price','min' => 0, 'class' => ['form-control']]) !!}
+                        @error('price') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
+                    </div>
+                </div>
+                {{-- description --}}
+                <div class="row form-group">
+                    <div class="col">
+                        {!! Form::label('description', __('Description')) !!}
+                        {!! Form::textarea('name', null, ['wire:model' => 'description','id' => 'description','rows' => 3, 'class' => ['form-control']]) !!}
+                        @error('description') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
                     </div>
                 </div>
             </div>
@@ -39,14 +46,5 @@
 $('#updateOrCreate').on('hidden.bs.modal', function () {
     @this.resetAll();
 })
-
-$('#parent_id').select2({
-    placeholder: "Select a Category",
-    allowClear: true
-});
-$('#parent_id').on('change', function(e) {
-    let data = $('#parent_id').select2("val");
-    @this.set('parent_id', data);
-});
 </script>
 @endsection

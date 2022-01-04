@@ -111,5 +111,9 @@
     "Users Count" : "عدد المستخدمين",
     "Change Image" : "تغيير الصورة",
     "Delete Permanently" : "حذف نهائي",
-    "Parent" : "الأصل"
+    "Parent" : "الأصل",
+    "Products" : "المنتجات",
+    "Product" : "المنتج",
+    "Description" : "الوصف",
+    "Price" : "السعر"
 }

@@ -44,6 +44,8 @@ function()
         Route::view('admins', 'admin.admins.admins')->name('admins');
         //categories
         Route::view('categories', 'admin.categories.categories')->name('categories');
+         //categories
+         Route::view('products', 'admin.products.products')->name('products');
         // countries
         Route::view('countries', 'admin.countries.countries')->name('countries');
         // cities

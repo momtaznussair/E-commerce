@@ -31,12 +31,12 @@ class UpdateOrCreateCategory extends Component
 
     protected function rules() {
         $rules =  [ 
-            'name' => 'required|unique:categories,name',
+            'name' => 'required|string|max:255|unique:categories,name',
             'parent_id' => 'nullable|exists:categories,id'
         ];
 
         if($this->mode = 'edit'){
-            $rules['name'] = 'required|unique:categories,name,' . $this->category;
+            $rules['name'] = 'required|string|max:255|unique:categories,name,' . $this->category;
         }
         return $rules;
     }

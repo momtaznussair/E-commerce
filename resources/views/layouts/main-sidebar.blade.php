@@ -24,6 +24,15 @@
 					</li>
 					@endcan
 
+					@can('Product_access')
+					<li class="slide">
+						<a class="side-menu__item" href="{{ route('admin.products') }}">
+							<i class="fas fa-cart-arrow-down side-menu__icon"></i>
+							<span class="side-menu__label mt-2">{{__('Products')}}</span>
+						</a>
+					</li>
+					@endcan
+
 					@can('Country_access')
 					<li class="slide">
 						<a class="side-menu__item" href="{{ route('admin.countries') }}">
