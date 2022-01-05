@@ -27,6 +27,12 @@ class Category extends Model
             ->saveSlugsTo('slug');
     }
 
+     //relations
+
+     public function products() {
+        return $this->belongsToMany(Product::class);
+    }
+
     protected $fillable = [
         'active',
         'name',
@@ -47,7 +53,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $softCascade = ['children'];
+    protected $softCascade = ['children', 'products'];
 
     //relations
     public function children() {

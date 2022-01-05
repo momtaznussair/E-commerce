@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\Categories\CategoryController;
 use App\Http\Controllers\Api\Countries\GetCountriesController;
+use App\Http\Controllers\Api\Products\ProductController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,6 +26,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('remove-image', [ProfileController::class, 'removeImage']);
    //categories
    Route::get('categories', [CategoryController::class, 'index']);
+   //products
+   Route::apiResource('products', ProductController::class, ['only' => ['index', 'show']]);
 });
 
 //get available counties and cities

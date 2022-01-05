@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\Categories;
 
+use App\Traits\Api\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
-use App\Traits\Api\ApiResponse;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -24,9 +23,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $categories = CategoryResource::collection(
-            $this->categoryRepository->getParents()
-        );
+        $categories = CategoryResource::collection( $this->categoryRepository->getParents() )
+        ->response()->getData(true);
         return $this->apiResponse($categories, 'List of categories');
     }
+
 }

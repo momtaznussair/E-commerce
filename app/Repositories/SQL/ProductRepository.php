@@ -12,4 +12,10 @@ class ProductRepository extends Repository implements ProductRepositoryInterface
     {
         Parent::__construct($product);
     }
+
+    public function getBySlug($product) {
+        return $this->model->where('slug', $product)
+        ->with('variations.type')
+        ->firstOrFail();
+    }
 }
