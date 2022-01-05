@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->string('slug')->unique();
-            $table->decimal('price', 15, 2, true);
+            $table->unsignedBigInteger('price');
             $table->boolean('active')->default(true);
             $table->softDeletes();
             $table->timestamps();

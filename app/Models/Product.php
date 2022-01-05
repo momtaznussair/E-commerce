@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\Money;
 use Spatie\Sluggable\HasSlug;
 use App\Traits\Scopes\IsTrashed;
 use App\Traits\Scopes\Searchable;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\Scopes\ActiveScope;
+use Money\Currencies\ISOCurrencies;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
@@ -73,4 +75,12 @@ class Product extends Model
             return $query->where('slug', $category);
         });
     }
+
+    // accessors
+    public function getFormattedPriceAttribute() {
+       $money =  new Money($this->price);
+       return $money->formatted();
+    }
+
+
 }
