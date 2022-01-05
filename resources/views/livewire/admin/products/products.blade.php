@@ -17,7 +17,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$product->name}}</td>
-                        <td>{{$product->price}}</td>
+                        <td>{{$product->formatted_price}}</td>
                         <td>{{$product->description}}</td>
                         <td>
                             @can('Product_edit')

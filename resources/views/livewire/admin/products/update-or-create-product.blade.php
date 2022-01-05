@@ -20,7 +20,7 @@
                 <div class="row form-group">
                     <div class="col">
                         {!! Form::label('price', __('Price'), ['class' => 'label-required']) !!}
-                        {!! Form::number('name', null, ['wire:model' => 'price','id' => 'price','min' => 0, 'class' => ['form-control']]) !!}
+                        {!! Form::number('name', null, ['wire:model' => 'price','id' => 'price','min' => 0,'step' => .01, 'class' => ['form-control']]) !!}
                         @error('price') <div class="tx-danger mt-1"><strong>{{ $message }}</strong></div> @enderror
                     </div>
                 </div>

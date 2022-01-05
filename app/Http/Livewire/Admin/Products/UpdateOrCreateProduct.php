@@ -23,7 +23,7 @@ class UpdateOrCreateProduct extends Component
         $this->mode = 'edit';
         $this->product_id = $product['id'];
         $this->name = $product['name'];
-        $this->price = $product['price'];
+        $this->price = $product['price'] / 100;
         $this->description = $product['description'];
     }
 
