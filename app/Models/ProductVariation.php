@@ -13,19 +13,6 @@ class ProductVariation extends Model
 {
     use HasFactory, HasPrice;
 
-    //relations
-    public function type() {
-        return $this->hasOne(ProductVariationType::class, 'id', 'product_variation_type_id');
-    }
-
-    public function product() {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function stocks() {
-       return $this->hasMany(Stock::class);
-    }
-
     //accessors
     public function getFormattedPriceAttribute() {
         $value = $this->price ?? $this->product->price;
@@ -39,6 +26,23 @@ class ProductVariation extends Model
             return false;
         }
         return $this->price !== $this->product->price;
+    }
+
+     //relations
+     public function type() {
+        return $this->hasOne(ProductVariationType::class, 'id', 'product_variation_type_id');
+    }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function stocks() {
+       return $this->hasMany(Stock::class);
+    }
+
+    public function stock() {
+        return $this->hasOne(ProductVariationStockView::class);
     }
 
 

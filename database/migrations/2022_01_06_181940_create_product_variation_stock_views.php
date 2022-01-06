@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductVariationsStockView extends Migration
+class CreateProductVariationStockViews extends Migration
 {
     /**
      * Run the migrations.
@@ -27,7 +27,7 @@ class CreateProductVariationsStockView extends Migration
 
     private function createView() {
         return '
-        CREATE VIEW product_variations_stock_view AS 
+        CREATE VIEW product_variation_stock_views AS 
         SELECT  product_variations.product_id AS product_id, 
 
         product_variations.id AS product_variation_id, 
@@ -59,7 +59,7 @@ class CreateProductVariationsStockView extends Migration
 
     private function dropView() {
         return '
-            DROP VIEW IF EXISTS `product_variations_stock_view`;
+            DROP VIEW IF EXISTS `product_variation_stock_views`;
         ';
     }
 }

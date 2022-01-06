@@ -29,17 +29,6 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
-    //relations
-
-    public function categories() {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function variations() {
-        return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
-    }
-
-
     /**
      * returns filters that can be applied to this model by getAll() method in Repository
      * ckeck App\Repositories\SQL\Repository
@@ -67,10 +56,31 @@ class Product extends Model
         return 'slug';
     }
 
+    //helpers
+
+    public function inStock() {
+        return (bool) $this->stockCount();
+    }
+
+    public function stockCount() {
+       return $this->variations->sum('stock.stock');
+    }
+
     //scopes
     public function scopeCategory($query, $category){
         return $query->whereHas('categories', function ($query) use ($category) {
             return $query->where('slug', $category);
         });
     }
+
+     //relations
+
+     public function categories() {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function variations() {
+        return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
+    }
+
 }
