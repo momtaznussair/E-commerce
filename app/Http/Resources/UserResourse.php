@@ -17,10 +17,11 @@ class UserResourse extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
+            'avatar' => $this->avatar_path,
             'gender' => $this->gen,
-            'age' => $this->age,
-            'city' => $this->city()->pluck('name', 'id'),
-            'country' => $this->city->country()->pluck('name', 'id'),
+            'dob' => $this->dob,
+            'city' => new CityResource($this->city),
+            'country' => new CountryResource($this->city->country),
             'phone' => $this->phone
         ];
     }

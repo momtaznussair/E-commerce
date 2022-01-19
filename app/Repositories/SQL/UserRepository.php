@@ -3,7 +3,6 @@
 namespace App\Repositories\SQL;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserRepository extends Repository implements UserRepositoryInterface{
@@ -13,14 +12,7 @@ class UserRepository extends Repository implements UserRepositoryInterface{
         Parent::__construct($user);
     }
 
-    public function add($attributes){
-        isset($attributes['avatar']) &&  $attributes['avatar'] = $attributes['avatar']->store('users');
-        $attributes['password'] && $attributes['password'] = Hash::make($attributes['password']);
-        return  Parent::add($attributes);
-    }
-
-    public function getByEmailOrPhone($emailOrPhone)
-    {
+    public function getByEmailOrPhone($emailOrPhone) {
         if(is_numeric($emailOrPhone)){
             return User::where('phone', $emailOrPhone)->first();
         }
@@ -29,14 +21,13 @@ class UserRepository extends Repository implements UserRepositoryInterface{
 
     public function updateOrCreate($attributes) {
         $attributes['avatar'] &&  $attributes['user']['avatar'] = $attributes['avatar']->store('users');
-        $attributes['password'] && $attributes['user']['password'] = Hash::make($attributes['password']);
         return User::updateOrCreate(
             ['id' => $attributes['user']['id']], // condition
             $attributes['user'] // attributes
         );
     }
 
-    public function removeImage($id){
+    public function removeImage($id) {
         return $this->getById($id)
         ->update(['avatar' => 'users/default.jpg']);
     }

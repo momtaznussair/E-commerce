@@ -25,10 +25,11 @@ class UpdateBasicData extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $this->user()->id,
-            'age' => 'required|integer|min:13',
-            'gender' => ['required', Rule::in(['m', 'f']) ],  
+            'dob' => 'required|date_format:Y-m-d|before:today',
+            'gender' => 'required|boolean',
         ];
     }
 }

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api\Cities;
 
 use App\Traits\Api\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CityResource;
 use App\Repositories\Contracts\CountryRepositoryInterface;
 
-class GetCitiesController extends Controller
+class CitiesController extends Controller
 {
     use ApiResponse;
     public function __invoke($id, CountryRepositoryInterface $countryRepository) {
-        return $this->apiResponse($countryRepository->getCities($id), 'List of all available cities');
+        $cities = CityResource::collection($countryRepository->getCities($id));
+        return $this->apiResponse($cities, 'List of all available cities');
     }
 }

@@ -7,6 +7,7 @@ use App\Traits\Scopes\IsTrashed;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\Scopes\ActiveScope;
 use App\Traits\Scopes\CountryScope;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -77,6 +78,7 @@ class User extends Authenticatable implements CanResetPasswordContract
        return $this->belongsTo(City::class);
     }
     
+    //accessors
     protected $appends = ['name'];
     
     public function getAvatarPathAttribute() {
@@ -89,5 +91,9 @@ class User extends Authenticatable implements CanResetPasswordContract
 
     public function getNameAttribute() {
         return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
+    }
+    //mutators
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

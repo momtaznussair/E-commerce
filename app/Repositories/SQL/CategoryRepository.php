@@ -21,7 +21,7 @@ class CategoryRepository extends Repository implements CategoryRepositoryInterfa
       return $this->model->parents()
       ->isActive()
       ->with('children')
-      ->paginate();
+      ->get();
    }
 
    public function all() {

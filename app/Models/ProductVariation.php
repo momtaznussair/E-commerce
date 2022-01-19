@@ -6,9 +6,6 @@ use App\Helpers\Money;
 use App\Traits\Api\Cart\HasPrice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use function PHPUnit\Framework\isNull;
-
 class ProductVariation extends Model
 {
     use HasFactory, HasPrice;

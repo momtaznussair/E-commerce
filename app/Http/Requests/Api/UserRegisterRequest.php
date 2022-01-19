@@ -28,12 +28,12 @@ class UserRegisterRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|max:255|email|unique:users,email',
             'phone' => 'required|digits:11|numeric|unique:users,phone',
             'city_id' => 'required|exists:cities,id',
             'country' => 'required|exists:countries,id',
             'avatar' =>  'nullable|image|max:1024', //1MB Max
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'password' => ['required', 'confirmed', 'max:255', Password::defaults()],
             'dob' => 'required|date_format:Y-m-d|before:today',
             'gender' => 'required|boolean',
         ];

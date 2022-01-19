@@ -20,37 +20,32 @@ class ProfileController extends Controller
        $this->userRepository = $userRepository;
     }
     
-    public function profile(Request $request)
-    {
+    public function profile(Request $request) {
         return $this->apiResponse(new UserResourse($request->user()), 'Current User Data');
     }
 
-    public function updateBasicData(UpdateBasicData $request)
-    {
-        if($this->userRepository->update($request->user()->id, $request->only(['name', 'email', 'age', 'gender']))){
+    public function updateBasicData(UpdateBasicData $request) {
+        if($this->userRepository->update($request->user()->id, $request->only(['first_name', 'last_name', 'dob','email', 'gender']))){
             return $this->apiResponse(null, 'Profile Updated Successfully');
         }
         return $this->UnknownError();
     }
 
-    public function updateAddressAndPhone(UpdateAddressAndPhone $request)
-    {
+    public function updateAddressAndPhone(UpdateAddressAndPhone $request) {
         if($this->userRepository->update($request->user()->id, $request->only(['city_id', 'phone']))){
             return $this->apiResponse(null, 'Profile Updated Successfully');
         }
         return $this->UnknownError();
     }
 
-    public function updatePassword(UpdatePassword $request)
-    {
-        if($this->userRepository->update($request->user()->id, ['password' => Hash::make($request->password)])){
+    public function updatePassword(UpdatePassword $request) {
+        if($this->userRepository->update($request->user()->id, ['password' => $request->password])){
             return $this->apiResponse(null, 'Profile Updated Successfully');
         }
         return $this->UnknownError();
     }
 
-    public function removeImage(Request $request)
-    {
+    public function removeImage(Request $request) {
         if($this->userRepository->removeImage($request->user()->id)){
             return $this->apiResponse(null , 'Image Removed Successfully!');
         }
