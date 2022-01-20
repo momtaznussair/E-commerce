@@ -26,4 +26,9 @@ class CartController extends Controller
         $this->cart->update($product_id, $request->quantity);
         return $this->apiResponse(null, 'Cart Item Updated Successfully!');
     }
+
+    public function destroy($product_id) {
+       $this->cart->delete($product_id);
+       return $this->apiResponse(null, 'Cart Item Deleted Successfully!');
+    }
 }

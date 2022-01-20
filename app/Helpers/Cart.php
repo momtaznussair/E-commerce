@@ -19,19 +19,18 @@ class Cart
         );
     }
 
-    public function update($productId, $quantity)
-    {
-        // checking if user cart has this Item
-        $product = $this->user->cart()
-            ->where('product_variation_id', $productId)
-            ->firstOrFail();
-            //updating Item
-            $product && $this->user->cart()->updateExistingPivot($productId, [
+    public function update($productId, $quantity) {
+        return $this->itemExists($productId) && $this->user->cart()->updateExistingPivot($productId, [
             'quantity' => $quantity,
         ]);
     }
 
-    private function getStorePayload($products) {
+    public function delete($productId) {
+        return $this->itemExists($productId) && $this->user->cart()->detach($productId);
+    }
+
+    private function getStorePayload($products)
+    {
         return collect($products)->keyBy('id')->map(function ($product) {
             return [
                 'quantity' => $product['quantity'] + $this->getCurrentQuantity($product['id']),
@@ -46,5 +45,11 @@ class Cart
             return $product->pivot->quantity;
         }
         return 0;
+    }
+
+    public function itemExists($productId) {
+        return $product = $this->user->cart()
+            ->where('product_variation_id', $productId)
+            ->firstOrFail();
     }
 }
