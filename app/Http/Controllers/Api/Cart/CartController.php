@@ -19,8 +19,20 @@ class CartController extends Controller
     }
 
     public function index() {
-        $items = CartItemResource::collection($this->cart->cart());
+        $items = CartItemResource::collection($this->cart->cart())
+        ->additional($this->meta())
+        ->response()
+        ->getData();
         return $this->apiResponse($items, "User's Cart");
+    }
+
+    private function meta() {
+        return [
+            'meta' => [
+                'isEmpty' => $this->cart->isEmpty(),
+                'subTotal' => $this->cart->subtotal()->formatted(),
+            ]
+        ];
     }
 
     public function store(StoreCartRequest $request) {

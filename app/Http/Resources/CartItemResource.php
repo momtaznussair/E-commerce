@@ -14,7 +14,7 @@ class CartItemResource extends ProductVariationResource
      */
     public function toArray($request)
     {
-        $total = new Money($this->price * $this->pivot->quantity);
+        $total = new Money($this->price_amount * $this->pivot->quantity);
         return array_merge(parent::toArray($request), [
             'product' => new ProductIndexResource($this->product),
             'quantity' => $this->pivot->quantity,

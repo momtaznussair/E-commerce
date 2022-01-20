@@ -12,9 +12,12 @@ class ProductVariation extends Model
 
     //accessors
     public function getFormattedPriceAttribute() {
-        $value = $this->price ?? $this->product->price;
-        $money =  new Money($value);
+        $money =  new Money($this->price_amount);
         return $money->formatted();
+    }
+
+     public function getPriceAmountAttribute() {
+        return $this->price ?? $this->product->price;
     }
 
     public function getPriceVariesAttribute() {
