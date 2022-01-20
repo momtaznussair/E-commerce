@@ -29,6 +29,10 @@ class Cart
         return $this->itemExists($productId) && $this->user->cart()->detach($productId);
     }
 
+    public function empty() {
+        return $this->user->cart()->detach();
+    }
+
     private function getStorePayload($products)
     {
         return collect($products)->keyBy('id')->map(function ($product) {
