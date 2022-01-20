@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\Auth\AuthController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
@@ -59,7 +58,6 @@ function()
         Route::view('login', 'admin.auth.login')->name('login');
         Route::view('/forget-password', 'admin.auth.forgotten-password')->name('forget-password-form');
         Route::view('/password/reset/{token}/{email}', 'admin.auth.reset-password')->name('password.reset');
-        Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
         //end of admin gust routes
     });
 	/** End Of Admin ROUTES GROUP **/

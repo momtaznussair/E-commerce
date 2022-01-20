@@ -3,7 +3,6 @@
 namespace App\Traits\Auth\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 
@@ -28,7 +27,7 @@ trait ResetsAdminPassword {
         $response = $this->broker()->reset(
             $credentials , function ($admin, $password) {
                 $admin->update([
-                    'password' => Hash::make($password)
+                    'password' => $password, //password is hashed by a Mutator
                 ]);
                 event(new PasswordReset($admin));
             }

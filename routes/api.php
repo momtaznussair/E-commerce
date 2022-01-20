@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Profile\ProfileController;
-use App\Http\Controllers\Api\Cities\CitiesController;
-use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Cart\CartController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\Cart\CartController;
+use App\Http\Controllers\Api\Cities\CitiesController;
+use App\Http\Controllers\Api\Profile\ProfileController;
+use App\Http\Controllers\Api\Products\ProductController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\Categories\CategoryController;
 use App\Http\Controllers\Api\Countries\CountriesController;
-use App\Http\Controllers\Api\Products\ProductController;
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     //auth
@@ -25,7 +26,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('remove-image', [ProfileController::class, 'removeImage']);
 
     //cart
-    Route::resource('cart', CartController::class);
+    Route::resource('cart', CartController::class, [
+        'parameters' => [
+            'cart' => 'productVariation'
+        ]
+    ]);
 });
 // Auth
 Route::post('login', LoginController::class);
