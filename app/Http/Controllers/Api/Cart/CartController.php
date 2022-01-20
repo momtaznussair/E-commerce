@@ -7,6 +7,7 @@ use App\Traits\Api\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
+use App\Http\Resources\CartItemResource;
 
 class CartController extends Controller 
 {
@@ -15,6 +16,11 @@ class CartController extends Controller
 
     public function __construct(Cart $cart) {
         $this->cart = $cart;
+    }
+
+    public function index() {
+        $items = CartItemResource::collection($this->cart->cart());
+        return $this->apiResponse($items, "User's Cart");
     }
 
     public function store(StoreCartRequest $request) {

@@ -12,6 +12,11 @@ class Cart
         $this->user = $user;
     }
 
+    public function cart() {
+        $this->user->load(['cart.product.variations.stock', 'cart.stock']);
+        return $this->user->cart;
+    }
+
     public function add(array $products)
     {
         return $this->user->cart()->syncWithoutDetaching(

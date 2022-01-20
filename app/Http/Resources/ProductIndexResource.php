@@ -23,5 +23,6 @@ class ProductIndexResource extends JsonResource
             'stock_count' => $this->stockCount(),
             'in_stock' => $this->inStock()
         ];
+        
     }
 }
