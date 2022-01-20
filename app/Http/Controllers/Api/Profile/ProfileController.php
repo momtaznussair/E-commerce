@@ -10,8 +10,6 @@ use App\Http\Requests\Profile\UpdatePassword;
 use App\Http\Resources\UserResourse;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Traits\Api\ApiResponse;
-use Illuminate\Support\Facades\Hash;
-
 class ProfileController extends Controller
 {
     use ApiResponse;

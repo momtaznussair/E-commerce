@@ -18,23 +18,31 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Authenticatable implements CanResetPasswordContract
 {
-    use HasApiTokens, HasFactory, Notifiable, IsTrashed, ActiveScope, 
-    SoftDeletes, CountryScope, SoftCascadeTrait, CanResetPassword;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        IsTrashed,
+        ActiveScope,
+        SoftDeletes,
+        CountryScope,
+        SoftCascadeTrait,
+        CanResetPassword;
 
-    public static  function filters() {
+    public static  function filters()
+    {
         return ['isActive', 'isTrashed', 'Search', 'country'];
     }
 
     /**
-   * Users' gender
-   * 
-   * @var array
-   */
-   public const Genders = [
-    0     => 'Male',
-    1    => 'Female'
- ];
-   
+     * Users' gender
+     * 
+     * @var array
+     */
+    public const GENDERS = [
+        0     => 'Male',
+        1    => 'Female'
+    ];
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -74,26 +82,39 @@ class User extends Authenticatable implements CanResetPasswordContract
      */
     protected $softCascade = [];
 
-    public function City() {
-       return $this->belongsTo(City::class);
+    //relations
+    public function cart()
+    {
+        return $this->belongsToMany(ProductVariation::class, 'carts')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
-    
+
+    public function City()
+    {
+        return $this->belongsTo(City::class);
+    }
+
     //accessors
     protected $appends = ['name'];
-    
-    public function getAvatarPathAttribute() {
+
+    public function getAvatarPathAttribute()
+    {
         return !is_null($this->avatar) ? asset('storage/' . $this->avatar) : asset('storage/users/default.jpg');
     }
 
-    public function getGenderTypeAttribute() {
-        return Self::Genders[$this->gender];
+    public function getGenderTypeAttribute()
+    {
+        return Self::GENDERS[$this->gender];
     }
 
-    public function getNameAttribute() {
+    public function getNameAttribute()
+    {
         return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
     }
     //mutators
-    public function setPasswordAttribute($value) {
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = Hash::make($value);
     }
 }

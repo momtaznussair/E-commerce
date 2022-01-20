@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Traits\Api\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Api\LoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Traits\Api\ApiResponse;
 
 class LoginController extends Controller
 {

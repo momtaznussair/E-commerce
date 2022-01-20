@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Traits\Api\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\UserRegisterRequest;
 use App\Http\Resources\UserResourse;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 class RegisterController extends Controller
@@ -18,7 +18,7 @@ class RegisterController extends Controller
      * @param  App\Http\Requests\Api\UserRegisterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(UserRegisterRequest $request, UserRepositoryInterface $userRepository)
+    public function __invoke(RegisterRequest $request, UserRepositoryInterface $userRepository)
     {
         if($request->hasFile('avatar')) {
             $request['avatar'] = $request->avatar->store('users');
